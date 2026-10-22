@@ -14,6 +14,15 @@ class App extends Component {
     filter: '',
   }
 
+
+handleComplitedTodo = (id) => {
+  this.setState((prev) => ({
+    todos: prev.todos.map(todo => todo.id === id? { ...todo, completed: !todo.completed }: todo
+    )
+  }))
+}
+
+
   handleDelete = (id) => {
     this.setState(prev => ({
       todos: prev.todos.filter(todo => todo.id !== id)
@@ -46,14 +55,14 @@ class App extends Component {
     const filteredTodo =  todos.filter((todo) => todo.text.toLowerCase().includes(filter.toLowerCase())) 
     const count = todos.length
 
-    const done = todos.filter((todo) => todo.completed).length /// ???
+    const done = todos.filter((todo) => todo.completed).length 
 
     return(
       <>
       <Info count={count} done={done}/>
       <TodoEditor onForm={this.handleSubmit}/>
       <Filter onFilter={this.handleFilter}/>
-      <TodoList todos={filteredTodo} onDelete={this.handleDelete}/>
+      <TodoList todos={filteredTodo} onDelete={this.handleDelete} handleCompleted={this.handleComplitedTodo}/>
       </>
     )
   }
